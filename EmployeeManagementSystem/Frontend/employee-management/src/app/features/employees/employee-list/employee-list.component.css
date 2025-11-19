@@ -1,0 +1,22 @@
+.card {
+  border-radius: 8px;
+}
+
+.card-header {
+  background-color: #343a40;
+  color: #fff;
+  border-radius: 8px 8px 0 0;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+  transition: 0.2s;
+}
+
+.btn {
+  border-radius: 6px;
+}

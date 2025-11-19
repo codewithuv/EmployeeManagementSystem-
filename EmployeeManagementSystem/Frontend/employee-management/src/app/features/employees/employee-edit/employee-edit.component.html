@@ -1,0 +1,42 @@
+<div class="container">
+  <h2>Edit Employee</h2>
+
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+    <!-- ID (Read Only) -->
+    <div class="form-group">
+      <label>Employee ID</label>
+      <input type="number" formControlName="id"  />
+    </div>
+
+    <!-- Name -->
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" formControlName="name" />
+      <p class="error" *ngIf="employeeForm.get('name')?.touched && employeeForm.get('name')?.invalid">
+        Name is required
+      </p>
+    </div>
+
+    <!-- Salary -->
+    <div class="form-group">
+      <label>Salary</label>
+      <input type="number" formControlName="salary" />
+      <p class="error" *ngIf="employeeForm.get('salary')?.touched && employeeForm.get('salary')?.invalid">
+        Enter a valid salary
+      </p>
+    </div>
+
+    <!-- Department -->
+    <div class="form-group">
+      <label>Department</label>
+      <input type="text" formControlName="department" />
+      <p class="error" *ngIf="employeeForm.get('department')?.touched && employeeForm.get('department')?.invalid">
+        Department is required
+      </p>
+    </div>
+
+    <button type="submit" class="btn">Update Employee</button>
+
+  </form>
+</div>

@@ -1,0 +1,15 @@
+.navbar {
+  border-radius: 5px;
+}
+
+.container {
+  max-width: 900px;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #0d6efd !important;
+}

@@ -1,5 +1,39 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+# ---- Node.js (Frontend) ----
+node_modules/
+dist/
+build/
+.env
+*.log
+
+# ---- .NET (Backend) ----
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.user
+*.vs/
+*.db
+*.mdf
+*.ldf
+
+# ---- OS Specific ----
+Thumbs.db
+.DS_Store
+
+# ---- IDE Specific ----
+.vscode/
+.idea/
+
+# ---- Others ----
+*.zip
+*.tar
+*.gz
+
 # Compiled output
 /dist
 /tmp
@@ -12,22 +46,7 @@ Frontend/node_modules/
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
 
 # Miscellaneous
 /.angular/cache

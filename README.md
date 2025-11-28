@@ -134,7 +134,7 @@ POST /api/employee
 
 ```json
 {
-  "name": "John Doe",
+  "name": "Calvin ",
   "department": "HR",
   "salary": 20000
 }
@@ -264,7 +264,7 @@ Example:
 [
   {
     "id": 1,
-    "name": "Ravi Kumar",
+    "name": "Utkarsh Gupta",
     "department": "Engineering",
     "salary": 35000
   }

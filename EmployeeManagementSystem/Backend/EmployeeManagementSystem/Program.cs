@@ -5,24 +5,26 @@ var builder = WebApplication.CreateBuilder(args);
 // =====================
 builder.Services.AddControllers();
 
-// CORS (Allow Angular – local + deployed)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+});
+
+// Swagger (EXPLICIT for .NET 8)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new()
     {
-        policy.AllowAnyOrigin()      // Allow Netlify / GitHub Pages
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        Title = "Employee Management API",
+        Version = "v1"
     });
 });
 
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// =====================
-// PORT CONFIG (REQUIRED FOR RENDER)
-// =====================
+// Render port
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(10000);
@@ -31,20 +33,18 @@ builder.WebHost.ConfigureKestrel(options =>
 var app = builder.Build();
 
 // =====================
-// MIDDLEWARE
+// MIDDLEWARE (ORDER MATTERS)
 // =====================
-if (app.Environment.IsDevelopment())
+
+// Swagger MUST be before MapControllers
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee Management API v1");
+    options.RoutePrefix = "swagger"; // /swagger
+});
 
-// ❌ Comment HTTPS redirection for Render free tier
-// app.UseHttpsRedirection();
-
-app.UseCors("AllowAngular");
-
-app.UseAuthorization();
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

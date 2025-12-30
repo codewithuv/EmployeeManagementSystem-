@@ -1,37 +1,50 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// =====================
+// SERVICES
+// =====================
 builder.Services.AddControllers();
 
-// Enable CORS for Angular
+// CORS (Allow Angular – local + deployed)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
-        policy.WithOrigins("http://localhost:4200")   // Angular dev server
+    {
+        policy.AllowAnyOrigin()      // Allow Netlify / GitHub Pages
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials());
+              .AllowAnyMethod();
+    });
 });
 
-// Swagger/OpenAPI
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// =====================
+// PORT CONFIG (REQUIRED FOR RENDER)
+// =====================
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(10000);
+});
+
 var app = builder.Build();
 
-// Enable Swagger
+// =====================
+// MIDDLEWARE
+// =====================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// IMPORTANT: Enable HTTPS redirection
-app.UseHttpsRedirection();
+// ❌ Comment HTTPS redirection for Render free tier
+// app.UseHttpsRedirection();
 
-// Apply CORS BEFORE Authorization & MapControllers
 app.UseCors("AllowAngular");
 
+app.UseAuthorization();
 
 app.MapControllers();
 
